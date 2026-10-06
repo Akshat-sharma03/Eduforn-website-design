@@ -31,6 +31,7 @@ jobs:
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           PAGES_BASE_PATH: ${{ vars.PAGES_BASE_PATH }}
+          PAGES_SITE_URL: ${{ vars.PAGES_SITE_URL }}
         run: python scripts/build_pages.py
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

@@ -1,124 +1,111 @@
 # Eduforn Website Redesign
 
-A responsive, static redesign preview for Eduforn Overseas. It keeps the supplied Eduforn identity, adds destination and service discovery, and provides locally working browsing tools for course planning and resources.
-
-> This is a local redesign preview. The enquiry forms do not transmit data and the project has not been connected to Eduforn's production systems. Confirm all business, staff, course and immigration details before public launch.
+A responsive, static website redesign for Eduforn Overseas Pvt. Ltd. The project focuses on useful study-abroad discovery, clear service descriptions, source-backed guidance, accessible interactions and a maintainable SEO foundation. It is a testing preview; it is not connected to Eduforn’s production systems.
 
 ## Run locally
 
-No framework, package manager, build command or server-side runtime is required. From the project root, start any static file server. For example:
+The source site uses plain HTML, CSS and JavaScript. No framework or package installation is needed. Start a static server from the project root:
 
 ```bash
 python -m http.server 8765
 ```
 
-Then open <http://127.0.0.1:8765/>. If Python is unavailable, any static web server that serves this folder at its root will work. The source keeps root-based routes for simple local development; the Pages packaging script rewrites them in the generated copy for repository subpaths.
+Open <http://127.0.0.1:8765/>. For a GitHub Pages-shaped local preview, generate the repository-subpath artifact and serve the output directory:
 
-## GitHub Pages deployment
+```bash
+GITHUB_REPOSITORY=Akshat-sharma03/Eduforn-website-design python scripts/build_pages.py
+python -m http.server 8765 --directory dist/github-pages
+```
 
-This repository is a static site and does not need a framework build. The included GitHub Actions workflow packages the files and deploys them to GitHub Pages whenever `main` is updated, or when the workflow is started manually.
+On Windows PowerShell, set `$env:GITHUB_REPOSITORY='Akshat-sharma03/Eduforn-website-design'` before running the build. The build creates service and article pages, rewrites root paths for the project-site URL, and adds canonical metadata, social metadata, structured data, `robots.txt` and `sitemap.xml` when a GitHub repository or `PAGES_SITE_URL` is available.
 
-1. Push this repository to GitHub and confirm that `main` is the default branch.
-2. In **Settings → Pages → Build and deployment**, choose **GitHub Actions** as the source.
-3. For `Akshat-sharma03/Eduforn-website-design`, GitHub's project-site URL is `https://akshat-sharma03.github.io/Eduforn-website-design/`. The workflow derives `/Eduforn-website-design/` automatically and rewrites internal page, image, CSS, and JavaScript paths in the generated artifact. The checked-in source remains unchanged.
-4. Open **Actions**, wait for **Deploy static site to GitHub Pages** to complete, and use the URL shown in the `github-pages` deployment environment.
+## Deploy with GitHub Pages
 
-To publish at the root of an account domain, the repository must be named `<account>.github.io` under that account. For a separately configured custom domain, set the repository Actions variable `PAGES_BASE_PATH` to `/` and configure the domain under **Settings → Pages**. Leave this variable unset for a normal project site; the workflow then derives the repository subpath. Do not put secrets in this variable.
+The workflow in `.github/workflows/pages.yml` builds and deploys the site when `main` changes or when manually run. Set **Settings → Pages → Build and deployment → Source** to **GitHub Actions**.
 
-To preview the generated artifact locally, run `python scripts/build_pages.py --base-path /Eduforn-website-design/` and serve `dist/github-pages/` as the web root. For a root-domain artifact, use `python scripts/build_pages.py --base-path /`. The build excludes local references and instructions and writes a `.nojekyll` marker for static asset publishing.
+For `Akshat-sharma03/Eduforn-website-design`, the standard project site is <https://akshat-sharma03.github.io/Eduforn-website-design/>. The workflow derives the repository path automatically. A custom domain requires configuring that domain under **Settings → Pages**, setting the Actions variable `PAGES_BASE_PATH` to `/`, and setting `PAGES_SITE_URL` to the canonical origin such as `https://www.example.com` (without a trailing slash). Do not add secrets to these variables.
 
-## Tech stack
+The workflow does not push files back into the repository. Generated pages are produced into the deployment artifact. For local source browsing, run `scripts/generate_content_pages.py` and `scripts/wire_internal_pages.py`; the normal Pages build runs these steps automatically.
 
-- HTML5 pages, using semantic landmarks, headings, forms and navigation.
-- CSS3 with shared design tokens, responsive grids, fluid sizing, tablet/mobile breakpoints and reduced-motion support. Layout rules adapt from compact 280px viewports through wide desktop displays; browser zoom and device text scaling remain available.
-- Vanilla JavaScript for the mobile menu, destination and services dropdowns, local-only form feedback, course-finder filtering, and Resource Corner filters.
-- No framework, package manager, or site runtime dependency. A Python standard-library script prepares the GitHub Pages artifact; GitHub Actions handles deployment.
-- External media: Unsplash photography and FlagCDN country-flag images. A network connection is needed for those remote images.
+## Technology
+
+- Semantic HTML5 pages with shared page components and accessible landmarks.
+- CSS3 design tokens and responsive layouts; Poppins typography; Eduforn’s supplied logo; navy, violet, teal and soft-lavender brand palette.
+- Vanilla JavaScript for the mobile navigation, destination dropdown, local-only enquiry feedback, course finder and Resource Corner filters.
+- Python standard-library scripts for static page generation and GitHub Pages path-aware packaging.
+- GitHub Actions and GitHub Pages for deployment; no runtime server, database or build dependency.
+- Unsplash photography and FlagCDN flag imagery are loaded remotely and require a network connection.
 
 ## Features
 
-- Eduforn-branded homepage with destination cards and country flags.
-- Nine destination pages: Australia, Canada, Dubai, Europe, Ireland, New Zealand, Singapore, United Kingdom and United States.
-- Responsive destinations and services navigation, switching to a scrollable compact menu for tablet and phone widths.
-- Responsive layouts for phones, tablets, laptops and wide screens, with narrow-screen text wrapping, flexible form controls, stacked content and a scrollable mobile navigation panel.
-- Services directory reflecting services described on Eduforn's public website.
-- Course and institution finder with destination filters and preference capture for subject, study level and intake. Institution links point to official provider websites. The filters do not guarantee active program availability, admission eligibility or a current Eduforn partnership.
-- Counsellor profile layout with clearly identified sample names and illustrative licensed stock portraits. Staff details, credentials, language skills, destination coverage and image consent require confirmation before publication.
-- Student-story area reserved for verified stories shared with student consent.
-- Resource Corner with 15 browsable topics, destination/intent/search filters and four first-wave full articles. Eleven topics are marked as briefs for later editorial development.
-- Article author/reviewer metadata, official references and counselling calls to action.
-- New Delhi counselling page using the office details published by Eduforn; call ahead to confirm appointment availability and hours.
-- Homepage FAQ, footer contact links, skip links and local-only callback form feedback.
+- Mobile-responsive homepage, country destination directory and nine individual destination guides.
+- Course finder with destination, subject, study level and intake filters and official institution links.
+- Services overview plus eight dedicated service pages: counselling, test preparation, course and institution guidance, applications, visa guidance, pre-departure, study finance, and remittance/forex.
+- Resource Corner with filters and fifteen full static guides, each with a direct answer, practical checks, official references and a counselling CTA.
+- Separate About, How it Works, Student Stories, Contact, New Delhi counselling, Privacy draft and Terms draft pages.
+- Student-story page intentionally has no fabricated testimonials. Placeholder counsellor names and stock photographs remain clearly marked as examples and must be replaced only with approved real details before launch.
+- Homepage FAQs remain at the end of the page. SDS is described as ended November 8, 2024. Canada’s generally applicable off-campus work limit is described as up to 24 hours per week during regular academic sessions for eligible students, subject to IRCC conditions.
+- Forms are preview-only: JavaScript prevents submission, and no API, CRM, email service or persistent store is connected. Do not enter sensitive data in the preview.
+- GitHub Pages build generates self-canonical URLs, Open Graph/Twitter metadata, Organization/WebPage/Article JSON-LD, a sitemap and crawl rules. OAI-SearchBot is allowed for search discovery; GPTBot is separately disallowed. The deployment URL should be changed to the final canonical domain before production launch.
+
+## SEO and AI search notes
+
+The Pages build regenerates the authored pages, wires internal links, then creates a clean deploy snapshot under `dist/github-pages/`. It applies the GitHub Pages repository subpath to root-relative asset and navigation URLs, so nested pages continue to load when served from `/<repository>/`.
+
+SEO work included in the build and content:
+
+- Distinct, descriptive titles and meta descriptions, a single clear page topic, semantic page landmarks and crawlable static URLs across the homepage, destination, service, company, course-finder and article pages.
+- Self-referencing canonical URLs based on the configured Pages site URL and base path, plus Open Graph and Twitter summary metadata for sharing.
+- JSON-LD for the organization and each web page; article pages are identified as `Article`. This describes visible page content and is not a promise of a rich result.
+- A generated XML sitemap that lists public HTML pages and excludes pages marked `noindex`; generated `robots.txt` allows general crawling and OAI-SearchBot, and separately disallows GPTBot.
+- Internal links among destination guides, services, course discovery and relevant Resource Corner guides. The guides use answer-first headings, practical context, and primary government or institution references where applicable.
+- Draft Privacy and Terms pages are marked `noindex` and left out of the sitemap pending business/legal review.
+- The shared navigation and internal pages use real, dedicated routes, including for service and destination details, rather than relying on homepage-only anchors.
+
+AI engine optimization (AEO) uses these same discoverability foundations: readable HTML, clear page purpose, concise answers, consistent organization identity, source attribution, and structured metadata that helps parsers understand page relationships. `OAI-SearchBot` is allowed so OpenAI search can discover public pages; `GPTBot` is separately disallowed. These controls do not guarantee crawling, citations, rankings or inclusion in AI answers. Keep content factual and updated, and do not present Eduforn as an immigration authority.
+
+For Canada content, the site states that the Student Direct Stream ended on November 8, 2024, and that eligible students may generally work off campus up to 24 hours per week during regular academic sessions, subject to permit and IRCC conditions. Readers are directed to current official IRCC guidance. Immigration rules, institution offerings and eligibility can change; verify all claims against the linked primary source before publication. Before production, configure the canonical site URL and base path, verify the domain in Search Console and Bing Webmaster Tools, review redirects and contact details, and obtain approval for the Privacy and Terms pages.
+
 
 ## Project tree
 
 ```text
 .
-├── README.md
-├── .gitignore                             # Keeps synced source references and build output out of Git
-├── .github/
-│   └── workflows/
-│       └── pages.yml                      # Builds and deploys through GitHub Pages Actions
-├── scripts/
-│   └── build_pages.py                     # Creates a base-path-aware Pages artifact
-├── index.html                             # Homepage, destinations, trust, services entry, FAQ and contact form
-├── styles.css                             # Shared design system and core responsive styles
-├── enhancements.css                       # Additional page components and mobile refinements
-├── main.js                                # Navigation and local-only enquiry behavior
+├── .github/workflows/pages.yml                  # GitHub Pages Actions workflow
 ├── assets/
-│   └── eduforn-logo.webp                  # Supplied Eduforn logo
+│   └── eduforn-logo.webp                        # Supplied Eduforn logo
+├── about/index.html                             # Company overview
+├── contact/index.html                           # Contact information and local-only form preview
 ├── course-finder/
-│   ├── index.html                         # Course/institution finder page
-│   └── finder.js                          # Destination filtering and preference handoff
+│   ├── index.html                                # Course and institution discovery
+│   └── finder.js                                 # Finder filters and local preference handoff
+├── destinations/index.html                      # Destination directory
+├── how-it-works/index.html                      # Planning journey
+├── privacy/index.html                            # Privacy notice draft for business review
 ├── resource-corner/
-│   ├── index.html                         # Topic directory and filters
-│   ├── filters.js                         # Search, destination and intent filtering
-│   └── articles/
-│       ├── canada-pal-tal/index.html      # PAL/TAL guide
-│       ├── canada-study-permit-after-sds/index.html
-│       ├── ielts-vs-pte/index.html
-│       └── university-shortlist/index.html
+│   ├── index.html                                # Topic directory and filters
+│   ├── filters.js                                # Destination, intent and text filters
+│   └── articles/<slug>/index.html                # 15 standalone study-abroad guides
+├── scripts/
+│   ├── build_pages.py                            # Path-aware deploy build, SEO metadata, sitemap/robots
+│   ├── generate_content_pages.py                 # Service, resource and company page generation
+│   └── wire_internal_pages.py                   # Internal navigation and card URLs
 ├── services/
-│   └── index.html                         # Services overview
-├── study-abroad-consultants-in-new-delhi/
-│   └── index.html                         # New Delhi counselling page
-├── study-in-australia/index.html
-├── study-in-canada/index.html
-├── study-in-dubai/index.html
-├── study-in-europe/index.html
-├── study-in-ireland/index.html
-├── study-in-new-zealand/index.html
-├── study-in-singapore/index.html
-├── study-in-uk/index.html
-└── study-in-usa/index.html
+│   ├── index.html                                # Services directory
+│   └── <service-slug>/index.html                 # Eight service detail pages
+├── student-stories/index.html                   # Consent-first, no fabricated stories
+├── study-abroad-consultants-in-new-delhi/        # New Delhi office and contact page
+├── study-in-*/index.html                         # Nine destination guides
+├── terms/index.html                              # Terms draft for business review
+├── enhancements.css                              # Page components and mobile refinements
+├── index.html                                    # Homepage, FAQs and preview enquiry form
+├── main.js                                       # Shared navigation and local-only form behavior
+├── styles.css                                    # Shared visual system and responsive styles
+└── README.md                                     # Project setup, features and deployment notes
 ```
 
-### Responsive layout notes
+The synced design-system reference in `sources/` is intentionally excluded from the deploy artifact and must remain a read-only project input. `dist/` is generated and ignored by Git.
 
-The shared styles use fluid containers and type sizing, then adjust navigation, grids, cards, forms, hero sections and footer columns at tablet and phone widths. The four full Resource Corner articles include the same accessible menu button as the other pages. A `prefers-reduced-motion` override respects the visitor's system setting. Validate representative pages at phone, tablet and desktop sizes before each release; device-specific browser rendering and remotely hosted Unsplash/FlagCDN media still depend on the visitor's browser and network.
+## Before production
 
-The project mirror also has `sources/Eduforn Design System Showcase w logo.png`, a synced design-reference file. It is kept locally and excluded from the Git repository; the supplied production logo used by the site is in `assets/`.
-
-## Content accuracy notes
-
-- Institution pages and links are research starting points. Confirm course availability, current entry requirements and any Eduforn representation relationship with the institution and Eduforn.
-- Counsellor names are placeholders, not staff biographies. Replace them with verified roles, qualifications, supported destinations and languages before launch.
-- Student names, quotes and outcomes are not shown without verification and consent.
-- Canada information links directly to current IRCC guidance. Rules can change; users should confirm their own eligibility and conditions with IRCC.
-- Resource Corner has four full guides and eleven briefs. Assign an accountable author and qualified reviewer, verify claims and dates, and update each article before treating it as finished editorial content.
-
-## Possible next upgrades
-
-1. Replace sample counsellor profiles with verified staff details, approved photos and language/destination coverage.
-2. Connect the callback form to Eduforn's approved CRM or enquiry endpoint, with consent, privacy notice, spam controls and clear success/failure states.
-3. Add a maintained course catalogue or provider API so subject, level and intake filters can return verified programs and entry links.
-4. Expand and review the remaining eleven articles; add editorial ownership, update reminders, destination/intent taxonomy and structured article metadata.
-5. Add approved student stories with written consent and documented outcome verification.
-6. Add analytics and conversion measurement with a privacy-conscious consent approach.
-7. Add automated accessibility, link, responsive and performance checks; optimize and self-host approved images and fonts.
-8. Pin GitHub Actions to reviewed full commit SHAs and enable automated action updates.
-9. Confirm the repository name, Pages URL and any custom-domain setup before enabling deployment.
-
-## Release readiness
-
-Before a public launch, verify all content with Eduforn, replace placeholders, review privacy and consent language, test the complete mobile navigation and forms, check outbound links, and confirm the intended GitHub Pages base URL. The enquiry form is a local preview interaction; it does not send or store submissions. The local source and preview remain separate from the live website.
+Eduforn should verify service scope and fees, business contact details, staff profile names/credentials/photos, any student stories and consent, university/course information, privacy and terms drafts, canonical domain, analytics/cookies, and all immigration guidance. The preview makes no admissions, visa, funding or service-outcome guarantees.
