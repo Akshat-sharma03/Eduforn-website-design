@@ -46,6 +46,7 @@ The workflow does not push files back into the repository. Generated pages are p
 - Student-story page intentionally has no fabricated testimonials. Placeholder counsellor names and stock photographs remain clearly marked as examples and must be replaced only with approved real details before launch.
 - Homepage FAQs remain at the end of the page. SDS is described as ended November 8, 2024. Canada’s generally applicable off-campus work limit is described as up to 24 hours per week during regular academic sessions for eligible students, subject to IRCC conditions.
 - Forms are preview-only: JavaScript prevents submission, and no API, CRM, email service or persistent store is connected. Do not enter sensitive data in the preview.
+- Shared text styles were audited for contrast across all 44 HTML pages; destination journey sections now use dark-on-light colors, while the homepage journey section retains its light-on-dark treatment. Small supporting labels and navigation metadata on light surfaces use stronger contrast.
 - GitHub Pages build generates self-canonical URLs, Open Graph/Twitter metadata, Organization/WebPage/Article JSON-LD, a sitemap and crawl rules. OAI-SearchBot is allowed for search discovery; GPTBot is separately disallowed. The deployment URL should be changed to the final canonical domain before production launch.
 
 ## SEO and AI search notes

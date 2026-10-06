@@ -101,3 +101,13 @@ p, li, dd, a, h1, h2, h3, h4 { overflow-wrap: anywhere; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
+/* Contrast audit: strengthen small, meaningful text on light surfaces across shared templates. */
+.hero-lede,.destination-card p,.body-copy,.contact-copy>p:not(.eyebrow){color:#59667b}
+.destination-num,.story-destination,.content-note,.breadcrumbs,.quiet-note,.canada-visual-foot,.institution-note{color:#59667b}
+.enquiry-form input::placeholder,.enquiry-form select:invalid,.enquiry-form .consent-row,.form-response{color:#59667b}
+.resource-teaser-card>span,.resource-card-top>span:first-child,.resource-keyword{color:#59667b}
+.services-panel>p,.counsellor-card p,.counsellor-card dt,.counsellor-disclaimer,.service-card>span{color:#59667b}
+.finder-results-heading p,.finder-card .finder-destination-link,.resource-result-count,.resource-stage-pill{color:#59667b}
+.delhi-detail-card>p,.article-deck,.article-meta,.article-disclaimer,.article-cta p:last-child{color:#59667b}
+.hero-bottom{color:#59667b}
+.destination-panel>p{color:#59667b}
